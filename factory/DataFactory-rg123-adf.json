@@ -1,0 +1,9 @@
+{
+	"name": "DataFactory-rg123-adf",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "7e836189-44da-4ca1-9648-e254562f0a22",
+		"tenantId": "ecd3a365-6de7-43a9-9c2d-7a2bede68111"
+	}
+}
