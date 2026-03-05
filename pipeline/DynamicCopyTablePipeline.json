@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "{\n\t\"count\": 10,\n\t\"value\": [\n\t\t{\n\t\t\t\"TABLE_NAME\": \"ProductCategory\"\n\t\t},\n\t\t{\n\t\t\t\"TABLE_NAME\": \"ProductDescription\"\n\t\t},\n\t\t{\n\t\t\t\"TABLE_NAME\": \"ProductModel\"\n\t\t},\n\t\t{\n\t\t\t\"TABLE_NAME\": \"ProductModelProductDescription\"\n\t\t},\n\t\t{\n\t\t\t\"TABLE_NAME\": \"SalesOrderDetail\"\n\t\t},\n\t\t{\n\t\t\t\"TABLE_NAME\": \"SalesOrderHeader\"\n\t\t},\n\t\t{\n\t\t\t\"TABLE_NAME\": \"Address\"\n\t\t},\n\t\t{\n\t\t\t\"TABLE_NAME\": \"Customer\"\n\t\t},\n\t\t{\n\t\t\t\"TABLE_NAME\": \"CustomerAddress\"\n\t\t},\n\t\t{\n\t\t\t\"TABLE_NAME\": \"Product\"\n\t\t}\n\t],\n\t\"effectiveIntegrationRuntime\": \"AutoResolveIntegrationRuntime (Central India)\",\n\t\"billingReference\": {\n\t\t\"activityType\": \"PipelineActivity\",\n\t\t\"billableDuration\": [\n\t\t\t{\n\t\t\t\t\"meterType\": \"AzureIR\",\n\t\t\t\t\"duration\": 0.016666666666666666,\n\t\t\t\t\"unit\": \"Hours\"\n\t\t\t}\n\t\t],\n\t\t\"totalBillableDuration\": [\n\t\t\t{\n\t\t\t\t\"meterType\": \"AzureIR\",\n\t\t\t\t\"duration\": 0.016666666666666666,\n\t\t\t\t\"unit\": \"Hours\"\n\t\t\t}\n\t\t]\n\t},\n\t\"durationInQueue\": {\n\t\t\"integrationRuntimeQueue\": 1\n\t}\n}",
+						"sqlReaderQuery": "select CONCAT(table_schema,'.',table_name) as TABLE_NAME\n\nfrom\n\nINFORMATION_SCHEMA.TABLES\n\nwhere Table_Schema='SalesLT'\n\nand table_type='BASE TABLE'",
 						"queryTimeout": "02:00:00",
 						"isolationLevel": "ReadCommitted",
 						"partitionOption": "None"
@@ -99,8 +99,14 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "DelimitedTextOutputSink",
-									"type": "DatasetReference"
+									"referenceName": "Dataset_DS",
+									"type": "DatasetReference",
+									"parameters": {
+										"FileName": {
+											"value": "@item().TABLE_NAME",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
